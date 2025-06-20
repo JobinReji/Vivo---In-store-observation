@@ -1,5 +1,5 @@
 import { useState } from "react";
-import sideImg from "../assets/images/Lg-sideImg.png";
+import sideImg from "../assets/images/Login.gif";
 import vivoLogo from "../assets/images/vivo_logo_blue.png";
 import { FaUser, FaLock } from "react-icons/fa";
 
@@ -15,7 +15,7 @@ export default function Login() {
     <div className="w-screen h-screen sm:bg-[url('/LoginPageBg.png')] bg-[url('/LoginPageBgM.png')] bg-cover flex items-center">
       <div className="w-[50%] sm:flex justify-center items-center hidden">
         <div className="w-full flex justify-center items-center">
-          <img src={sideImg} className="w-[40%]" alt="Side Image" />
+          <img src={sideImg} className="w-[50%]" alt="Side Image" />
         </div>
       </div>
       <div className="sm:w-[50%] w-full flex justify-center items-center">
