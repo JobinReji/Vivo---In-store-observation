@@ -113,114 +113,115 @@ export default function MainPage() {
             >
               <FaCalendarAlt />
             </button>
-          </div>
-          {showMobileCalendar && (
-            <div className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-              <div className="bg-white p-4 rounded-lg w-[90%] max-w-md">
-                <div className="w-fit m-auto">
-                  <DatePicker
-                    selected={date}
-                    onChange={(date) => {
-                      setDate(date);
-                      setShowMobileCalendar(false);
-                    }}
-                    inline
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={15}
-                    calendarClassName="react-datepicker-custom"
-                    renderCustomHeader={({
-                      date,
-                      changeYear,
-                      changeMonth,
-                      decreaseMonth,
-                      increaseMonth,
-                      prevMonthButtonDisabled,
-                      nextMonthButtonDisabled,
-                    }) => (
-                      <div className="flex justify-between items-center px-4 py-2">
-                        <button
-                          onClick={decreaseMonth}
-                          disabled={prevMonthButtonDisabled}
-                          className="p-1 rounded hover:bg-gray-100"
-                        >
-                          {"<"}
-                        </button>
-                        <select
-                          value={date.getFullYear()}
-                          onChange={({ target: { value } }) =>
-                            changeYear(Number(value))
-                          }
-                          className="mx-2 p-1 rounded border bg-[#2C28A0]"
-                        >
-                          {Array.from(
-                            { length: 20 },
-                            (_, i) => new Date().getFullYear() - 10 + i
-                          ).map((year) => (
-                            <option key={year} value={year}>
-                              {year}
-                            </option>
-                          ))}
-                        </select>
-                        <select
-                          value={date.toLocaleString("default", {
-                            month: "long",
-                          })}
-                          onChange={({ target: { value } }) =>
-                            changeMonth(
-                              new Date(
-                                Date.parse(value + " 1, 2000")
-                              ).getMonth()
-                            )
-                          }
-                          className="mx-2 p-1 rounded border bg-[#2C28A0]"
-                        >
-                          {Array.from({ length: 12 }, (_, i) =>
-                            new Date(0, i).toLocaleString("default", {
+
+            {showMobileCalendar && (
+              <div className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+                <div className="bg-white p-4 rounded-lg w-[90%] max-w-md">
+                  <div className="w-fit m-auto">
+                    <DatePicker
+                      selected={date}
+                      onChange={(date) => {
+                        setDate(date);
+                        setShowMobileCalendar(false);
+                      }}
+                      inline
+                      showYearDropdown
+                      scrollableYearDropdown
+                      yearDropdownItemNumber={15}
+                      calendarClassName="react-datepicker-custom"
+                      renderCustomHeader={({
+                        date,
+                        changeYear,
+                        changeMonth,
+                        decreaseMonth,
+                        increaseMonth,
+                        prevMonthButtonDisabled,
+                        nextMonthButtonDisabled,
+                      }) => (
+                        <div className="flex justify-between items-center px-4 py-2">
+                          <button
+                            onClick={decreaseMonth}
+                            disabled={prevMonthButtonDisabled}
+                            className="p-1 rounded hover:bg-gray-100"
+                          >
+                            {"<"}
+                          </button>
+                          <select
+                            value={date.getFullYear()}
+                            onChange={({ target: { value } }) =>
+                              changeYear(Number(value))
+                            }
+                            className="mx-2 p-1 rounded border bg-[#2C28A0]"
+                          >
+                            {Array.from(
+                              { length: 20 },
+                              (_, i) => new Date().getFullYear() - 10 + i
+                            ).map((year) => (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            value={date.toLocaleString("default", {
                               month: "long",
-                            })
-                          ).map((month) => (
-                            <option key={month} value={month}>
-                              {month}
-                            </option>
-                          ))}
-                        </select>
-                        <button
-                          onClick={increaseMonth}
-                          disabled={nextMonthButtonDisabled}
-                          className="p-1 rounded hover:bg-gray-100"
-                        >
-                          {">"}
-                        </button>
-                      </div>
-                    )}
-                  />
+                            })}
+                            onChange={({ target: { value } }) =>
+                              changeMonth(
+                                new Date(
+                                  Date.parse(value + " 1, 2000")
+                                ).getMonth()
+                              )
+                            }
+                            className="mx-2 p-1 rounded border bg-[#2C28A0]"
+                          >
+                            {Array.from({ length: 12 }, (_, i) =>
+                              new Date(0, i).toLocaleString("default", {
+                                month: "long",
+                              })
+                            ).map((month) => (
+                              <option key={month} value={month}>
+                                {month}
+                              </option>
+                            ))}
+                          </select>
+                          <button
+                            onClick={increaseMonth}
+                            disabled={nextMonthButtonDisabled}
+                            className="p-1 rounded hover:bg-gray-100"
+                          >
+                            {">"}
+                          </button>
+                        </div>
+                      )}
+                    />
+                  </div>
+                  <button
+                    onClick={() => setShowMobileCalendar(false)}
+                    className="mt-4 w-full py-2 bg-[#2C28A0] text-white rounded-md"
+                  >
+                    Close
+                  </button>
                 </div>
-                <button
-                  onClick={() => setShowMobileCalendar(false)}
-                  className="mt-4 w-full py-2 bg-[#2C28A0] text-white rounded-md"
-                >
-                  Close
-                </button>
               </div>
+            )}
+            <div className="sm:block hidden mt-2">
+              <Calendar
+                onChange={setDate}
+                value={date}
+                onClickDay={(date) => {
+                  console.log("Selected date:", {
+                    day: date.getDate(),
+                    month: date.getMonth() + 1,
+                    year: date.getFullYear(),
+                  });
+                }}
+                className="border rounded-lg shadow-md"
+                tileClassName={({ activeStartDate, date, view }) =>
+                  view === "month" && date.getDay() === 0 ? "font-bold" : null
+                }
+              />
             </div>
-          )}
-          <div className="sm:block hidden">
-            <Calendar
-              onChange={setDate}
-              value={date}
-              onClickDay={(date) => {
-                console.log("Selected date:", {
-                  day: date.getDate(),
-                  month: date.getMonth() + 1,
-                  year: date.getFullYear(),
-                });
-              }}
-              className="border rounded-lg shadow-md"
-              tileClassName={({ activeStartDate, date, view }) =>
-                view === "month" && date.getDay() === 0 ? "font-bold" : null
-              }
-            />
           </div>
         </div>
         <div className="sm:w-[85%] w-full grid overflow-auto sm:grid-cols-8 grid-cols-2 gap-4 sm:p-6 p-3">
